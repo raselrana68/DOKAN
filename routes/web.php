@@ -27,3 +27,6 @@ Route::get('force/delete/product/{product_id}','productController@forceDeletePro
 Route::get('edit/product/{product_id}','productController@editProduct');
 Route::get('restore/product/{product_id}','productController@restoreProduct');
 Route::POST('edit/product/insert','productController@editProductInsert');
+
+Route::get('add/category/view','categoryController@addCategoryView');
+Route::post('add/category/insert','categoryController@addCategoryinsert');

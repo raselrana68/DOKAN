@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
+use App\category;
 use Image;
 use Carbon\Carbon;
 
@@ -15,8 +16,8 @@ class productController extends Controller
     function addProductView(){
         $products = Product::paginate(10);
         $deletedProducts = Product::onlyTrashed()->get();
-        
-        return view('product/view', compact('products','deletedProducts'));
+        $categories = category::all();
+        return view('product/view', compact('products','deletedProducts','categories'));
         
     }
     
@@ -28,6 +29,7 @@ class productController extends Controller
             'product_price'=> 'required | numeric',
             'product_quantity'=> 'required | numeric',
             'alert_quantity'=> 'required | numeric',
+            'category_id' => 'required',
             ]);
             
             $last_inserted_id = Product::insertGetId([
@@ -37,6 +39,8 @@ class productController extends Controller
                 'product_quantity'=>$request->product_quantity,
                 'alert_quantity'=>$request->alert_quantity,
                 'created_at'=> Carbon::now(),
+                'category_id' => $request->category_id,
+
                 ]);
                 
                 if($request->hasFile('product_image')){
@@ -70,7 +74,8 @@ class productController extends Controller
                 
     function editProduct($product_id){
         $product_info = Product::findOrFail($product_id);
-        return view('product/edit',compact('product_info'));
+        $categories = category::all();
+        return view('product/edit',compact('product_info','categories'));
     }
                 
     function restoreProduct($product_id){
@@ -108,6 +113,7 @@ class productController extends Controller
                 'product_price'=>$request->product_price,
                 'product_quantity'=>$request->product_quantity,
                 'alert_quantity'=>$request->alert_quantity,
+                'category_id'=>$request->category_id,
                 ]);
                 
                 return back()->with('status','Product Updated Successfully.');

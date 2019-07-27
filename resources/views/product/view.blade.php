@@ -20,6 +20,7 @@
                                 <tr>
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Product Description</th>
+                                    <th scope="col">Product category</th>
                                     <th scope="col">Product Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Alert Quantity</th>
@@ -33,6 +34,7 @@
                                 <tr>
                                     <td>{{ $product->product_name}}</td>
                                     <td>{{ str_limit($product->product_description,20)}}</td>
+                                    <td>{{ App\category::find($product->category_id)->category_name }}</td>
                                     <td>{{ $product->product_price}}</td>
                                     <td>{{ $product->product_quantity}}</td>
                                     <td>{{ $product->alert_quantity}}</td>
@@ -40,7 +42,7 @@
                                         <img src="{{ asset('uploads/product_photos')}}/{{ $product->product_image}}" alt="not found" width="50">
                                     </td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($product->created_at)->format('d-M-Y h:i A') }} <br>
+                                        {{-- {{ Carbon\Carbon::parse($product->created_at)->format('d-M-Y h:i A') }} <br> --}}
                                         <span class="text-info"> {{ ($product->created_at)->diffForHumans()}} </span>
                                     </td>
                                     <td>
@@ -87,7 +89,6 @@
                                         <td>{{ $dproduct->product_name}}</td>
                                         <td>{{ str_limit($dproduct->product_description,20)}}</td>
                                         <td>{{ $dproduct->product_price}}</td>
-                                        <td>{{ $dproduct->product_quantity}}</td>
                                         <td>{{ $dproduct->alert_quantity}}</td>
                                         <td>
                                             <img src="{{ asset('uploads/product_photos')}}/{{ $dproduct->product_image}}" alt="not found" width="50">
@@ -115,8 +116,8 @@
         
         <div class="col-3">
             <div class="card">
-                <div class="card-header bg-success  mb-2">
-                <a href="{{ url('add/category/view')}}" class="offset-3 text-light">Add Category</a>
+                <div class="card-header bg-warning  mb-2">
+                <a href="{{ url('add/category/view')}}" class="offset-3 text-dark">Add Category Here</a>
                 </div>
                 <div class="card-header bg-info text-light">
                     <label class="offset-3" for="">Add Product</label>
@@ -143,11 +144,11 @@
                         </div>
                         <div class="form-group">
                             <label>Category</label>
-                            <select class="form-control" name="" id="">
+                            <select class="form-control" name="category_id" id="">
                                 <option value="">--Select Category--</option>                            
-                                <option value="">123</option>                            
-                                <option value="">123</option>                            
-                                <option value="">123</option>                            
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"> {{ $category->category_name }}</option>                            
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

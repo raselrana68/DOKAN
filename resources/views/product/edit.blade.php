@@ -30,6 +30,15 @@
                                 <input type="text" class="form-control" name="product_name" value="{{ $product_info -> product_name}}">
                             </div>
                             <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control" name="category_id" id="">
+                                    <option class="font-weight-bold" value="{{$product_info->category_id}}">{{ App\category::find($product_info->category_id)->category_name }}</option>                            
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"> {{ $category->category_name }}</option>                            
+                                    @endforeach
+                                </select>
+                            </div>    
+                            <div class="form-group">
                                     <label>Product Description</label>
                                     <textarea class="form-control" rows="3" name="product_description" >{{ $product_info -> product_description }}</textarea>
                             </div>
