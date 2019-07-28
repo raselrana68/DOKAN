@@ -10,7 +10,8 @@
 |
 */
 
-Route::get('/', 'RegisterController@login');
+Route::get('/', 'frontendController@index');
+Route::get('/login', 'RegisterController@login');
 
 Auth::routes();
 
