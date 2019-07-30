@@ -9,8 +9,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//frontend
 Route::get('/', 'frontendController@index');
+Route::get('product/details/{product_id}', 'frontendController@productDetails');
+
+
 Route::get('/login', 'RegisterController@login');
 
 Auth::routes();
